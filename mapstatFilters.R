@@ -2,7 +2,7 @@
 # MapStatFilters - A script for filtering a mapstat file for unwanted hits / references that do not meet certain conditions
 # Also adds a combination of derived statistics 
 # Author: Patrick Munk
-# Edited: March 28, 2023
+# Edited: September 7, 2023
 # Example use : Rscript.exe mapstatFilters.R -i example_data\SRR1027651.mapstat -o thisIsTestData/filtered.flt.out.mapstat -r .\example_data\ResFinder_20200125.refdata
 
 # TODO
@@ -49,6 +49,9 @@ ms_header = mapstat[grep("##", mapstat)]
 ms_colnames = unlist(strsplit(mapstat[length(ms_header)+1], "\t"))
 ms_data = read.delim(textConnection(mapstat), comment.char = "#", h = F, 
                      col.names = ms_colnames, check.names = F)
+
+# Sometimes fastas have comments after an empty space following the name
+ms_data[,1] = gsub( " .*$", "", ms_data[,1])
 
 # Read in the refdata / onject with genes and gene lengths
 refdata_width = ncol(read.delim(opt$refdata, nrows =  1, comment.char = "#", sep = "\t"))
