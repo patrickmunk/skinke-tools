@@ -1,0 +1,7 @@
+## method	KMA
+## version	1.4.12a
+## database	db_mOTU_20221205
+## fragmentCount	36937023
+## date	2023-08-30
+## command	kma -ipe "/home/projects/cge/backup/fastq/food_seqdata/Novaseq_009/Trimmed/DTU_2022_1024436_1_MG_IT_FE_955_S0_L001_R1_001.trim.fq.gz" "/home/projects/cge/backup/fastq/food_seqdata/Novaseq_009/Trimmed/DTU_2022_1024436_1_MG_IT_FE_955_S0_L001_R2_001.trim.fq.gz" -o "results/yes_assembly/kma_mOTUs/DTU_2022_1024436_1_MG_IT_FE_955_S0_L001/DTU_2022_1024436_1_MG_IT_FE_955_S0_L001" -t_db /home/databases/metagenomics/db/mOTUs_20221205/db_mOTU_20221205 -mem_mode -ef -1t1 -apm p -oa -matrix 
+# refSequence	readCount	fragmentCount	mapScoreSum	refCoveredPositions	refConsensusSum	bpTotal	depthVariance	nucHighDepthVariance	depthMax	snpSum	insertSum	deletionSum	readCountAln	fragmentCountAln
