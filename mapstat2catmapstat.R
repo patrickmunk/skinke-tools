@@ -21,7 +21,6 @@ if (is.null(opt$prefix)){
 
 # Check if mandatory dir is supplied
 if (is.null(opt$mapstatdir)){
-  print_help(opt_parser)
   stop("A directory with mapstat file needs to be supplied (-m)", call.=FALSE)
 }
 
@@ -33,7 +32,6 @@ if (is.null(opt$mapstatdir)){
 # Read in file names from wd
 #file_list <- list.files()
 file_list = list.files(opt$mapstatdir)
-print(file_list)
 
 # Select just the mapstat files in the working directory
 file_list = file_list[grepl(".mapstat",file_list, fixed=T)]
@@ -43,11 +41,23 @@ file_paths = file.path(opt$mapstatdir, file_list)
 catmapstat = NULL
 
 # Iteratively read in every file, add sample name and concatenate results
+#for (i in file_paths) {
+#	mapstat = read.delim(i, h=T, sep="\t", skip=6, check.names=F)
+#  print(nrow(mapstat))
+#	sampleName = gsub(".mapstat", "", i)
+#	mapstat = data.frame(sample = sampleName, mapstat)
+#	catmapstat = rbind(catmapstat, mapstat)
+#}
+
 for (i in file_paths) {
-	mapstat = read.delim(i, h=T, sep="\t", skip=6, check.names=F)
-	sampleName = gsub(".mapstat", "", i)
-	mapstat = data.frame(sample = sampleName, mapstat)
-	catmapstat = rbind(catmapstat, mapstat)
+  mapstat = tryCatch({
+    read.delim(i, h=T, sep="\t", skip=6, check.names=F)
+    }, error = function(err) {
+      print(paste("Could not read a table. Empty? Check output!",err))
+      })
+      sampleName = gsub(".mapstat", "", i)
+      mapstat = data.frame(sample = sampleName, mapstat)
+      catmapstat = rbind(catmapstat, mapstat)
 }
 
 # Fix the bad column name
